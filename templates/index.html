@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="/static/css/styles.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facial Login System</title>
@@ -108,22 +110,30 @@
         </div>
     </div>
 
-    <!-- Sleek footer with design credit -->
-    <footer>
-        @Designed by <a href="https://thawing-lowlands-18205.herokuapp.com/index.html" target="_blank">Synthia Li</a>
-    </footer>
+<!-- Sleek footer with design credit -->
+<footer>
+    @Designed by <a href="https://thawing-lowlands-18205.herokuapp.com/index.html" target="_blank">Synthia Li</a>
+</footer>
 
-    <!-- Add Bootstrap JS and dependencies for dynamic effects -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+<!-- Add Bootstrap JS and dependencies for dynamic effects -->
+
+<!-- Only keep the latest jQuery version -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Ensure document is fully loaded before binding events
+    $(document).ready(function() {
         // Update the label of the file input with the selected filename
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
-    </script>
+    });
+</script>
 </body>
+
 
 </html>
