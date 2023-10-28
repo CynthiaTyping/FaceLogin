@@ -7,6 +7,9 @@ app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.secret_key = 'secret_key_here'  # For flashing messages
 
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 @app.route('/upload', methods=['GET', 'POST'])
 def get_image():
     if request.method == 'POST':
