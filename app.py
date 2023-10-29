@@ -18,6 +18,7 @@ siamese = SiameseModel()
 def home():
     return render_template('index.html')
 
+
 @app.route('/upload', methods=['GET', 'POST'])
 def get_image():
     if request.method == 'POST':
@@ -73,6 +74,7 @@ def predict_similarity():
     os.remove(uploaded_img_path)
 
     return jsonify({"similarity_score": similarity_score})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
