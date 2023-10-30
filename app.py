@@ -45,7 +45,7 @@ def get_image():
 
     return render_template('index.html')
 
-@app.route('/predict_similarity', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict_similarity():
     # Check if the post request has the files part
     if 'true_img' not in request.files or 'uploaded_img' not in request.files:

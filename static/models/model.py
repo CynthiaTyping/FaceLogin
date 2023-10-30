@@ -1,3 +1,5 @@
+import os.path
+
 import cv2
 from keras.models import load_model
 from keras import backend as K
@@ -5,7 +7,8 @@ from keras import backend as K
 
 class SiameseModel:
     def __init__(self):
-        self.model = self.load_siamese_model('siamese_nn.h5')
+        path = os.path.dirname(__file__)
+        self.model = self.load_siamese_model(os.path.join(path, 'siamese_nn.h5'))
 
     @staticmethod
     def euclidean_distance(vectors):
