@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Login System</title>
+    <!-- Add Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Importing Google font for fancy title -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+    background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.centered {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 600px;
+    border-radius: 20px;
+}
+
+.btn-cute {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    border-radius: 20px;
+    background-color: #b79ced;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.btn-cute:hover {
+    background-color: #9b77d4;
+}
+
+footer {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1rem;
+    color: #eee;
+}
+
+footer a {
+    color: #23a6d5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h5.card-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+}
+
+#webcam {
+display: block;
+margin: 0 auto;
+}
+    </style>
+</head>
+
+<body>
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Facial Login System</h5>
+                    <form action="/upload" method="post" onsubmit="submitForm(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Please capture your image</label>
+                            <div class="d-flex justify-content-center">
+                                <video id="webcam" width="320" height="240" autoplay></video>
+                                <img id="photo" alt="The screen capture will appear in this box." width="320"
+                                     height="240" style="display: none;">
+                                <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+                                <input type="hidden" name="imageData" id="imageData">
+
+
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button id="capture" class="btn btn-cute" type="button">Capture</button>
+                            <button type="submit" class="btn btn-cute">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    @Designed by <a href="https://to_be_added" target="_blank">Synthia Li</a>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Ensure document is fully loaded before binding events
+    $(document).ready(function() {
+        // Update the label of the file input with the selected filename
+        $('.custom-file-input').on('change', function() {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+    });
+</script>
+
+
+<script>
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const photo = document.getElementById('photo');
+    const captureButton = document.getElementById('capture');
+
+    const constraints = { video: { width: 320, height: 240 } };
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            video.srcObject = stream;
+        })
+        .catch(function (error) {
+            console.error('Cannot access the webcam.', error);
+        });
+
+    document.getElementById('capture').addEventListener('click', function () {
+        let canvas = document.getElementById('canvas');
+        let video = document.getElementById('webcam');
+        let photo = document.getElementById('photo');
+
+        let context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, 320, 240);
+
+        let imageData = canvas.toDataURL('image/png');
+        photo.setAttribute('src', imageData);
+
+    document.getElementById('imageData').value = imageData;
+
+        video.style.display = 'none';
+        photo.style.display = 'block';
+
+        video.srcObject.getTracks().forEach(track => track.stop());
+    });
+
+
+</script>
+
+<script>
+
+    function submitForm(event) {
+    const imageData = document.getElementById('imageData').value;
+
+    if (!imageData) {
+        event.preventDefault();
+        alert('Please capture your image before submitting.');
+    }
+}
+
+</script>
+
+</body>
+
+
+</html>
